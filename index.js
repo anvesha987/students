@@ -1,17 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const app = express();
-const PORT = 3003;
+require('dotenv').config()
+const PORT = process.env.PORT || 3003;
+const mongoURI = process.env.MONGO
 
 //middleware
 app.use(express.json());
+app.use(cors())
 
 //home page
 app.get("/", (req, res) => {
   res.send("Welcome to express");
 });
 
-mongoose.connect("mongodb://localhost:27017/student_info");
+mongoose.connect(mongoURI);
 const xyz = mongoose.model("student", {
   name: String,
   age: { type: Number, required: true },
